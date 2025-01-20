@@ -1,0 +1,177 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixel Art Portfolio</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+</head>
+<body>
+  <header>
+    <h1>My Pixel Art Portfolio</h1>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section id="about">
+    <h2>About Me</h2>
+    <p>Hello! I'm a pixel artist passionate about creating retro-style art. Welcome to my portfolio!</p>
+  </section>
+
+  <section id="gallery">
+    <h2>Gallery</h2>
+    <div class="gallery-container">
+      <!-- Add your images here -->
+      <div class="gallery-item">
+        <img src="images/art1.png" alt="Pixel Art 1">
+        <p>Pixel Art 1</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>Contact Me</h2>
+    <p>Feel free to reach out if you'd like to work with me or have any questions!</p>
+    <div>
+        <p><b>Email:</b>ak641501@gmail.com</p>
+        <p><b>Discord Username:</b>kingakadarsh</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 My Pixel Art Portfolio. All rights reserved.</p>
+  </footer>
+</body>
+</html>
+<style>/* General Styles */
+body {
+  margin: 0;
+  font-family: 'Press Start 2P', cursive;
+  background-color: #121212;
+  color: #f1f1f1;
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* Header Styles */
+header {
+  background-color: #282828;
+  padding: 20px 0;
+  border-bottom: 4px solid #4caf50;
+}
+
+header h1 {
+  font-size: 24px;
+  margin: 0;
+}
+
+header nav a {
+  color: #4caf50;
+  text-decoration: none;
+  margin: 0 15px;
+  font-size: 14px;
+  transition: color 0.3s;
+}
+
+header nav a:hover {
+  color: #81c784;
+}
+
+/* Section Styles */
+section {
+  padding: 40px 20px;
+  margin: 20px 0;
+  border-top: 2px solid #4caf50;
+}
+
+section h2 {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+/* Gallery Styles */
+.gallery-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.gallery-item {
+  background-color: #1e1e1e;
+  padding: 15px;
+  border: 2px solid #4caf50;
+  border-radius: 10px;
+}
+
+.gallery-item img {
+  max-width: 100%;
+  border: 2px solid #81c784;
+}
+
+.gallery-item p {
+  margin: 10px 0 0;
+  font-size: 12px;
+  color: #81c784;
+}
+
+/* Contact Section */
+#contact p {
+  font-size: 14px;
+}
+
+#contact b {
+  color: #4caf50;
+}
+
+/* Footer Styles */
+footer {
+  background-color: #282828;
+  padding: 10px 0;
+  font-size: 12px;
+  color: #81c784;
+}
+
+/* Smooth Scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 18px;
+  }
+
+  header nav a {
+    font-size: 12px;
+  }
+
+  section h2 {
+    font-size: 18px;
+  }
+
+  .gallery-item {
+    padding: 10px;
+  }
+}
+</style><script>document.querySelectorAll('.gallery-item img').forEach(img => {
+  img.addEventListener('click', () => {
+    const lightbox = document.createElement('div');
+    lightbox.id = 'lightbox';
+    document.body.appendChild(lightbox);
+
+    const imgClone = img.cloneNode();
+    lightbox.appendChild(imgClone);
+
+    lightbox.addEventListener('click', () => {
+      lightbox.remove();
+    });
+  });
+});
+</script>
