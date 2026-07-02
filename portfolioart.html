@@ -1,201 +1,257 @@
-<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+```html id="portfolio-full"
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pixel Art Portfolio</title>
-  <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My 3D Portfolio</title>
 
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#0b1120;
+    color:white;
+}
+
+header{
+    text-align:center;
+    padding:40px;
+    background:#111827;
+}
+
+header h1{
+    font-size:42px;
+}
+
+header p{
+    color:#94a3b8;
+    margin-top:10px;
+}
+
+.topbar{
+    display:flex;
+    justify-content:center;
+    margin:30px;
+}
+
+button{
+    padding:12px 22px;
+    border:none;
+    cursor:pointer;
+    background:#2563eb;
+    color:white;
+    border-radius:8px;
+    font-size:16px;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+#portfolio{
+    width:90%;
+    margin:auto;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:25px;
+    margin-bottom:50px;
+}
+
+.card{
+    background:#1e293b;
+    border-radius:12px;
+    overflow:hidden;
+}
+
+.card img{
+    width:100%;
+    height:250px;
+    object-fit:cover;
+}
+
+.card-content{
+    padding:15px;
+}
+
+.card-content h3{
+    margin-bottom:10px;
+}
+
+.card-content p{
+    color:#94a3b8;
+}
+
+.empty{
+    text-align:center;
+    margin-top:60px;
+    color:#64748b;
+    font-size:20px;
+}
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.7);
+    justify-content:center;
+    align-items:center;
+}
+
+.modal-box{
+    width:400px;
+    background:#111827;
+    padding:25px;
+    border-radius:12px;
+}
+
+input,textarea{
+    width:100%;
+    padding:12px;
+    margin-top:12px;
+    background:#1e293b;
+    border:none;
+    color:white;
+    border-radius:6px;
+}
+
+textarea{
+    height:100px;
+    resize:none;
+}
+
+.close{
+    background:#ef4444;
+    margin-top:12px;
+}
+
+footer{
+    text-align:center;
+    padding:20px;
+    color:#94a3b8;
+}
+</style>
 </head>
+
 <body>
-  <header>
-    <h1>My Pixel Art Portfolio</h1>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#gallery">Gallery</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
 
-  <section id="about">
-    <h2>About Me</h2>
-    <p>Hello! I'm a pixel artist passionate about creating retro-style art. Welcome to my portfolio!</p>
-  </section>
+<header>
+    <h1>My 3D Modeling Portfolio</h1>
+    <p>Roblox Models • Low Poly Art • Game Assets • Environment Design</p>
+</header>
 
-  <section id="gallery">
-    <h2>Gallery</h2>
-    <div class="gallery-container">
-      <!-- Add your images here -->
-      <div class="gallery-item">
-        <img src="art1.png" alt="Pixel Art 1">
-        <p>lantern</p>
-      </div>
-      <div class="gallery-item">
-        <img src="art2.png" alt="Pixel Art 1">
-        <p>character#1</p>
-      </div>
-      <div class="gallery-item">
-        <img src="art3.png" alt="Pixel Art 1">
-        <p>tree</p>
-      </div>
-      <div class="gallery-item">
-        <img src="art4.png" alt="Pixel Art 1">
-        <p>pirate</p>
-      </div>
-      <div class="gallery-item">
-        <img src="art5.png" alt="Pixel Art 1">
-        <p>rifle</p>
-      </div>
-      <div class="gallery-item">
-        <img src="art6.png" alt="Pixel Art 1">
-        <p>potion</p>
-      </div>
-      <div class="gallery-item">
-        <img src="art7.png" alt="Pixel Art 1">
-        <p>vampire</p>
-      </div>
+<div class="topbar">
+    <button onclick="checkPassword()">+ Add Project</button>
+</div>
+
+<div id="portfolio"></div>
+
+<div class="modal" id="modal">
+    <div class="modal-box">
+        <h2>Upload Project</h2>
+
+        <input id="title" placeholder="Project title">
+
+        <textarea id="desc" placeholder="Description"></textarea>
+
+        <input id="image" placeholder="Image URL">
+
+        <button style="margin-top:15px;" onclick="addProject()">Upload</button>
+
+        <button class="close" onclick="closeModal()">Close</button>
     </div>
-  </section>
+</div>
 
-  <section id="contact">
-    <h2>Contact Me</h2>
-    <p>Feel free to reach out if you'd like to work with me or have any questions!</p>
-    <div>
-        <p><b>Email:</b>ak641501@gmail.com</p>
-        <p><b>Discord Username:</b>kingakadarsh</p>
-    </div>
-  </section>
+<footer>
+© 2026 My Portfolio
+</footer>
 
-  <footer>
-    <p>© 2025 My Pixel Art Portfolio. All rights reserved.</p>
-  </footer>
+<script>
+
+let projects = JSON.parse(localStorage.getItem("portfolioProjects")) || [];
+
+function saveProjects(){
+    localStorage.setItem("portfolioProjects",JSON.stringify(projects));
+}
+
+function renderProjects(){
+
+    let container=document.getElementById("portfolio");
+
+    if(projects.length===0){
+        container.innerHTML='<div class="empty">No projects uploaded yet</div>';
+        return;
+    }
+
+    container.innerHTML="";
+
+    projects.forEach((project,index)=>{
+
+        container.innerHTML += `
+        <div class="card">
+            <img src="${project.image}">
+            <div class="card-content">
+                <h3>${project.title}</h3>
+                <p>${project.desc}</p>
+            </div>
+        </div>
+        `;
+    });
+}
+
+function checkPassword(){
+
+    let password=prompt("Enter Password");
+
+    if(password==="18118"){
+        document.getElementById("modal").style.display="flex";
+    }
+    else{
+        alert("Wrong Password");
+    }
+}
+
+function closeModal(){
+    document.getElementById("modal").style.display="none";
+}
+
+function addProject(){
+
+    let title=document.getElementById("title").value;
+    let desc=document.getElementById("desc").value;
+    let image=document.getElementById("image").value;
+
+    if(title==="" || desc==="" || image===""){
+        alert("Fill all fields");
+        return;
+    }
+
+    projects.push({
+        title:title,
+        desc:desc,
+        image:image
+    });
+
+    saveProjects();
+
+    renderProjects();
+
+    closeModal();
+
+    document.getElementById("title").value="";
+    document.getElementById("desc").value="";
+    document.getElementById("image").value="";
+}
+
+renderProjects();
+
+</script>
+
 </body>
 </html>
-<style>/* General Styles */
-body {
-  margin: 0;
-  font-family: 'Press Start 2P', cursive;
-  background-color: #121212;
-  color: #f1f1f1;
-  line-height: 1.5;
-  text-align: center;
-}
-
-/* Header Styles */
-header {
-  background-color: #282828;
-  padding: 20px 0;
-  border-bottom: 4px solid #4caf50;
-}
-
-header h1 {
-  font-size: 24px;
-  margin: 0;
-}
-
-header nav a {
-  color: #4caf50;
-  text-decoration: none;
-  margin: 0 15px;
-  font-size: 14px;
-  transition: color 0.3s;
-}
-
-header nav a:hover {
-  color: #81c784;
-}
-
-/* Section Styles */
-section {
-  padding: 40px 20px;
-  margin: 20px 0;
-  border-top: 2px solid #4caf50;
-}
-
-section h2 {
-  font-size: 20px;
-  margin-bottom: 20px;
-}
-
-/* Gallery Styles */
-.gallery-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  padding: 20px;
-}
-
-.gallery-item {
-  background-color: #1e1e1e;
-  padding: 15px;
-  border: 2px solid #4caf50;
-  border-radius: 10px;
-}
-
-.gallery-item img {
-  max-width: 100%;
-  border: 2px solid #81c784;
-}
-
-.gallery-item p {
-  margin: 10px 0 0;
-  font-size: 12px;
-  color: #81c784;
-}
-
-/* Contact Section */
-#contact p {
-  font-size: 14px;
-}
-
-#contact b {
-  color: #4caf50;
-}
-
-/* Footer Styles */
-footer {
-  background-color: #282828;
-  padding: 10px 0;
-  font-size: 12px;
-  color: #81c784;
-}
-
-/* Smooth Scroll */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  header h1 {
-    font-size: 18px;
-  }
-
-  header nav a {
-    font-size: 12px;
-  }
-
-  section h2 {
-    font-size: 18px;
-  }
-
-  .gallery-item {
-    padding: 10px;
-  }
-}
-</style><script>document.querySelectorAll('.gallery-item img').forEach(img => {
-  img.addEventListener('click', () => {
-    const lightbox = document.createElement('div');
-    lightbox.id = 'lightbox';
-    document.body.appendChild(lightbox);
-
-    const imgClone = img.cloneNode();
-    lightbox.appendChild(imgClone);
-
-    lightbox.addEventListener('click', () => {
-      lightbox.remove();
-    });
-  });
-});
-</script>
+```
