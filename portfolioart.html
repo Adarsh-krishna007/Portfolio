@@ -1,10 +1,10 @@
-```html id="portfolio-full"
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My 3D Portfolio</title>
+<title>My 3D Modeling Portfolio</title>
 
 <style>
 *{
@@ -23,6 +23,7 @@ header{
     text-align:center;
     padding:40px;
     background:#111827;
+    box-shadow:0 4px 10px rgba(0,0,0,0.3);
 }
 
 header h1{
@@ -30,8 +31,8 @@ header h1{
 }
 
 header p{
-    color:#94a3b8;
     margin-top:10px;
+    color:#94a3b8;
 }
 
 .topbar{
@@ -41,12 +42,12 @@ header p{
 }
 
 button{
-    padding:12px 22px;
-    border:none;
-    cursor:pointer;
+    padding:12px 24px;
     background:#2563eb;
-    color:white;
+    border:none;
     border-radius:8px;
+    color:white;
+    cursor:pointer;
     font-size:16px;
 }
 
@@ -58,7 +59,7 @@ button:hover{
     width:90%;
     margin:auto;
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
     gap:25px;
     margin-bottom:50px;
 }
@@ -67,6 +68,11 @@ button:hover{
     background:#1e293b;
     border-radius:12px;
     overflow:hidden;
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-6px);
 }
 
 .card img{
@@ -89,9 +95,10 @@ button:hover{
 
 .empty{
     text-align:center;
+    width:100%;
     margin-top:60px;
+    font-size:22px;
     color:#64748b;
-    font-size:20px;
 }
 
 .modal{
@@ -104,7 +111,7 @@ button:hover{
 }
 
 .modal-box{
-    width:400px;
+    width:420px;
     background:#111827;
     padding:25px;
     border-radius:12px;
@@ -121,8 +128,8 @@ input,textarea{
 }
 
 textarea{
-    height:100px;
     resize:none;
+    height:100px;
 }
 
 .close{
@@ -142,7 +149,7 @@ footer{
 
 <header>
     <h1>My 3D Modeling Portfolio</h1>
-    <p>Roblox Models • Low Poly Art • Game Assets • Environment Design</p>
+    <p>Low Poly Models • Roblox Assets • Environment Art • Game Props</p>
 </header>
 
 <div class="topbar">
@@ -151,15 +158,16 @@ footer{
 
 <div id="portfolio"></div>
 
+<!-- Upload Modal -->
 <div class="modal" id="modal">
     <div class="modal-box">
-        <h2>Upload Project</h2>
+        <h2>Upload New Project</h2>
 
-        <input id="title" placeholder="Project title">
+        <input id="title" placeholder="Project Title">
 
-        <textarea id="desc" placeholder="Description"></textarea>
+        <textarea id="desc" placeholder="Project Description"></textarea>
 
-        <input id="image" placeholder="Image URL">
+        <input type="file" id="imageFile" accept="image/*">
 
         <button style="margin-top:15px;" onclick="addProject()">Upload</button>
 
@@ -176,21 +184,21 @@ footer{
 let projects = JSON.parse(localStorage.getItem("portfolioProjects")) || [];
 
 function saveProjects(){
-    localStorage.setItem("portfolioProjects",JSON.stringify(projects));
+    localStorage.setItem("portfolioProjects", JSON.stringify(projects));
 }
 
 function renderProjects(){
 
-    let container=document.getElementById("portfolio");
+    let container = document.getElementById("portfolio");
 
     if(projects.length===0){
-        container.innerHTML='<div class="empty">No projects uploaded yet</div>';
+        container.innerHTML = '<div class="empty">No projects uploaded yet</div>';
         return;
     }
 
-    container.innerHTML="";
+    container.innerHTML = "";
 
-    projects.forEach((project,index)=>{
+    projects.forEach(project=>{
 
         container.innerHTML += `
         <div class="card">
@@ -206,10 +214,10 @@ function renderProjects(){
 
 function checkPassword(){
 
-    let password=prompt("Enter Password");
+    let password = prompt("Enter Admin Password");
 
-    if(password==="18118"){
-        document.getElementById("modal").style.display="flex";
+    if(password === "18118"){
+        document.getElementById("modal").style.display = "flex";
     }
     else{
         alert("Wrong Password");
@@ -217,35 +225,40 @@ function checkPassword(){
 }
 
 function closeModal(){
-    document.getElementById("modal").style.display="none";
+    document.getElementById("modal").style.display = "none";
 }
 
 function addProject(){
 
-    let title=document.getElementById("title").value;
-    let desc=document.getElementById("desc").value;
-    let image=document.getElementById("image").value;
+    let title = document.getElementById("title").value;
+    let desc = document.getElementById("desc").value;
+    let file = document.getElementById("imageFile").files[0];
 
-    if(title==="" || desc==="" || image===""){
+    if(title === "" || desc === "" || !file){
         alert("Fill all fields");
         return;
     }
 
-    projects.push({
-        title:title,
-        desc:desc,
-        image:image
-    });
+    let reader = new FileReader();
 
-    saveProjects();
+    reader.onload = function(e){
 
-    renderProjects();
+        projects.push({
+            title: title,
+            desc: desc,
+            image: e.target.result
+        });
 
-    closeModal();
+        saveProjects();
+        renderProjects();
+        closeModal();
 
-    document.getElementById("title").value="";
-    document.getElementById("desc").value="";
-    document.getElementById("image").value="";
+        document.getElementById("title").value = "";
+        document.getElementById("desc").value = "";
+        document.getElementById("imageFile").value = "";
+    }
+
+    reader.readAsDataURL(file);
 }
 
 renderProjects();
